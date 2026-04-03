@@ -24,7 +24,7 @@ Code quality tools and formatting hooks:
 
 ```bash
 # Add the marketplace
-/plugin marketplace add <github-username>/claude-marketplace
+/plugin marketplace add HugoDorne/claude-marketplace
 
 # Install plugins
 /plugin install java-toolbox@hugo-marketplace
@@ -35,7 +35,7 @@ Code quality tools and formatting hooks:
 
 ```bash
 # Add from local directory
-/plugin marketplace add ./projects/claude-marketplace
+/plugin marketplace add <path_to_marketplace>
 
 # Install and test
 /plugin install java-toolbox@hugo-marketplace

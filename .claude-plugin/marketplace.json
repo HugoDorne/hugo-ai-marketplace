@@ -3,6 +3,10 @@
   "owner": {
     "name": "Hugo DORNE"
   },
+    "source": {
+    "source": "github",
+    "repo": "HugoDorne/claude-marketplace"
+  },
   "metadata": {
     "description": "Hugo's personal Claude Code plugins",
     "version": "1.0.0"
@@ -24,7 +28,7 @@
       "version": "1.0.0",
       "author": { "name": "Hugo DORNE" },
       "category": "development",
-      "keywords": ["sonar", "editorconfig", "formatting", "code-review"]
+      "keywords": ["sonar", "code-review"]
     }
   ]
 }
