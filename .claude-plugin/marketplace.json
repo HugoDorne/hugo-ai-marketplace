@@ -1,0 +1,30 @@
+{
+  "name": "hugo-marketplace",
+  "owner": {
+    "name": "Hugo DORNE"
+  },
+  "metadata": {
+    "description": "Hugo's personal Claude Code plugins",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "java-toolbox",
+      "source": "./plugins/java-toolbox",
+      "description": "Java/Spring Boot development skills: Javadoc generation, best practices review, unit test generation",
+      "version": "1.0.0",
+      "author": { "name": "Hugo DORNE" },
+      "category": "development",
+      "keywords": ["java", "spring-boot", "junit", "javadoc"]
+    },
+    {
+      "name": "code-quality",
+      "source": "./plugins/code-quality",
+      "description": "Code quality tools: code explanation, SonarQube scanning, editorconfig formatting hooks",
+      "version": "1.0.0",
+      "author": { "name": "Hugo DORNE" },
+      "category": "development",
+      "keywords": ["sonar", "editorconfig", "formatting", "code-review"]
+    }
+  ]
+}

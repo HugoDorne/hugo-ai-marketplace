@@ -1,0 +1,15 @@
+{
+  "PostToolUse": [
+    {
+      "matcher": "Write|Edit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/format-on-write.sh",
+          "timeout": 10000,
+          "statusMessage": "Formatting with .editorconfig..."
+        }
+      ]
+    }
+  ]
+}
