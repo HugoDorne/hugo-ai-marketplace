@@ -29,6 +29,15 @@
       "author": { "name": "Hugo DORNE" },
       "category": "development",
       "keywords": ["sonar", "code-review"]
+    },
+        {
+      "name": "productivity",
+      "source": "./plugins/productivity",
+      "description": "Productivity tools: smart compacting ...",
+      "version": "1.0.0",
+      "author": { "name": "Hugo DORNE" },
+      "category": "productivity",
+      "keywords": ["smart-compact"]
     }
   ]
 }
