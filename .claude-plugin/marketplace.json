@@ -13,22 +13,13 @@
   },
   "plugins": [
     {
-      "name": "java-toolbox",
-      "source": "./plugins/java-toolbox",
-      "description": "Java/Spring Boot development skills: Javadoc generation, best practices review, unit test generation",
-      "version": "1.0.0",
-      "author": { "name": "Hugo DORNE" },
-      "category": "development",
-      "keywords": ["java", "spring-boot", "junit", "javadoc"]
-    },
-    {
       "name": "code",
       "source": "./plugins/code",
-      "description": "Code tools: code explanation, SonarQube scanning, dependency update checking",
-      "version": "1.1.0",
+      "description": "Code tools: explanation, SonarQube scanning, dependency update checking, Javadoc/OpenAPI/ADR generation, Java/Spring Boot best-practices review, and JUnit test generation",
+      "version": "1.2.0",
       "author": { "name": "Hugo DORNE" },
       "category": "development",
-      "keywords": ["sonar", "code-review", "dependencies", "updates"]
+      "keywords": ["sonar", "code-review", "dependencies", "updates", "java", "spring-boot", "junit", "javadoc"]
     },
         {
       "name": "productivity",
