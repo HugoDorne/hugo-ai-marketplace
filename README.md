@@ -1,24 +1,24 @@
 # Hugo's Claude Marketplace
 
-Personal Claude Code plugin marketplace with Java/Spring Boot development tools and code quality utilities.
+Personal Claude Code plugin marketplace: Java/Spring Boot development tooling, code-quality
+utilities, and productivity helpers.
 
 ## Plugins
 
-### java-toolbox
+### code
 
-Java/Spring Boot development skills:
+Code understanding, quality, dependency, and Java/Spring documentation & testing tools:
 
-- **`/doc`** — Generate Javadoc, OpenAPI/Swagger annotations, or ADR documentation
-- **`/java-spring-best-practices`** — Review code against Java/Spring Boot best practices (security, SOLID, conventions)
-- **`/java-unit-test`** — Generate JUnit 5 unit tests with AssertJ, @Nested classes, and behavioral naming
+- **`/explain`** — Explain how code works: purpose, flow diagram, step-by-step walkthrough, design decisions, and gotchas
+- **`/sonar`** — Scan for SonarQube/static-analysis/IDE issues and code smells, list them by severity, and fix the ones you pick
+- **`/check-updates`** — Check Maven (`pom.xml`) and npm (`package.json`) dependencies for newer versions, grouped by risk, and apply only the upgrades you approve
+- **`/doc`** — Generate Javadoc, OpenAPI/Swagger annotations, ADRs, or README sections
+- **`/java-spring-best-practices`** — Review or write Java/Spring Boot code against best practices (security, SOLID, Spring patterns, conventions, tests, SQL migrations)
+- **`/java-unit-test`** — Generate JUnit 5 unit tests with AssertJ, `@Nested` classes, Mockito, and behavioral naming
 
-### code-quality
+### productivity
 
-Code quality tools and formatting hooks:
-
-- **`/explain`** — Explain code with structure, diagrams, and step-by-step walkthroughs
-- **`/sonar`** — Scan for SonarQube/IDE code issues, list them, and fix selected ones
-- **Hooks** — Auto-format files with `.editorconfig` rules on Write/Edit operations
+- **`/smart-compact`** — Summarize the session into a structured handoff, then trigger `/compact` with that summary so the right context survives compaction
 
 ## Installation
 
@@ -27,8 +27,8 @@ Code quality tools and formatting hooks:
 /plugin marketplace add HugoDorne/claude-marketplace
 
 # Install plugins
-/plugin install java-toolbox@hugo-marketplace
-/plugin install code-quality@hugo-marketplace
+/plugin install code@hugo-marketplace
+/plugin install productivity@hugo-marketplace
 ```
 
 ## Local testing
@@ -38,5 +38,5 @@ Code quality tools and formatting hooks:
 /plugin marketplace add <path_to_marketplace>
 
 # Install and test
-/plugin install java-toolbox@hugo-marketplace
+/plugin install code@hugo-marketplace
 ```

@@ -1,6 +1,11 @@
 ---
 name: doc
-description: Generate Javadoc, OpenAPI/Swagger annotations, or ADR documentation for existing Java code
+description: >
+  Generate documentation for existing code — Javadoc, OpenAPI/Swagger annotations,
+  Architecture Decision Records (ADRs), or README sections. Use when the user asks to document
+  a class/method/endpoint, add API docs or Swagger annotations, write an ADR for a design
+  decision, or produce a module/package README. Code examples are Java/Spring, but ADR and
+  README generation are language-agnostic.
 disable-model-invocation: false
 ---
 

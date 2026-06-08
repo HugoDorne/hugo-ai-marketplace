@@ -1,6 +1,11 @@
 ---
 name: sonar
-description: Scan for SonarQube and IDE code issues, list them, and let the user choose which ones to fix
+description: >
+  Scan code for quality issues — SonarQube/SonarLint findings, static-analysis and IDE
+  markers, common code smells, and TODO/FIXME/suppressed-warning markers — then list them by
+  severity and fix the ones the user picks. Use when the user wants to find or clean up code
+  smells, lint or static-analysis warnings, technical debt, or "issues/problems in" a file,
+  class, or module — even when they don't name SonarQube specifically.
 disable-model-invocation: false
 ---
 

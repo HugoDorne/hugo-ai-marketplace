@@ -7,6 +7,7 @@ description: >
   was worked on, what changed, decisions made, and what's still pending — then triggers
   /compact with that summary as the guiding prompt so the compacted context retains
   the right information for the next session.
+disable-model-invocation: false
 ---
 
 # Smart Compact

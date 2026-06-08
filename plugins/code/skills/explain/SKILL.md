@@ -1,6 +1,11 @@
 ---
 name: explain
-description: Explain code clearly with structure, diagrams, and context
+description: >
+  Explain how code works — purpose, an ASCII flow/structure diagram, a step-by-step
+  walkthrough, key design decisions, and gotchas. Use whenever the user wants to understand
+  a file, class, method, or feature they didn't write or have forgotten: "how does this work",
+  "walk me through this", "what does this do", "explain this code/function", or when onboarding
+  to an unfamiliar part of a codebase.
 disable-model-invocation: false
 ---
 
