@@ -22,13 +22,13 @@
       "keywords": ["java", "spring-boot", "junit", "javadoc"]
     },
     {
-      "name": "code-quality",
-      "source": "./plugins/code-quality",
-      "description": "Code quality tools: code explanation, SonarQube scanning, editorconfig formatting hooks",
-      "version": "1.0.0",
+      "name": "code",
+      "source": "./plugins/code",
+      "description": "Code tools: code explanation, SonarQube scanning, dependency update checking",
+      "version": "1.1.0",
       "author": { "name": "Hugo DORNE" },
       "category": "development",
-      "keywords": ["sonar", "code-review"]
+      "keywords": ["sonar", "code-review", "dependencies", "updates"]
     },
         {
       "name": "productivity",

@@ -1,0 +1,23 @@
+{
+  "skill_name": "check-updates",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I haven't touched this Maven project in a while. Can you check whether any of the dependencies in this pom.xml are out of date? Don't change anything yet — just tell me what's available.",
+      "expected_output": "Runs the Maven versions checks (including property updates so jackson/guava are caught), presents available updates grouped/labelled by major/minor/patch risk, filters pre-releases, and stops without editing the pom because the user asked report-only.",
+      "files": ["fixtures/maven-project/pom.xml"]
+    },
+    {
+      "id": 1,
+      "prompt": "are my npm packages outdated? if so go ahead and bump the safe (non-major) ones for me, leave the risky ones alone",
+      "expected_output": "Runs npm outdated, classifies updates by semver bump, applies only the non-major upgrades (e.g. axios/lodash patch/minor) via npm install, and explicitly leaves major bumps (e.g. react 17->18) unchanged while reporting them.",
+      "files": ["fixtures/npm-project/package.json"]
+    },
+    {
+      "id": 2,
+      "prompt": "what can I update in here? this is a spring boot service. show me everything then we'll decide together",
+      "expected_output": "Detects the Maven project, gathers all available updates, presents them grouped by risk with current->target versions, and waits for the user's selection before applying anything (asks which to apply).",
+      "files": ["fixtures/maven-project/pom.xml"]
+    }
+  ]
+}
