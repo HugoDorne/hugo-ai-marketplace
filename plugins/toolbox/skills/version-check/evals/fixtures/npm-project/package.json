@@ -2,7 +2,7 @@
   "name": "update-fixture",
   "version": "1.0.0",
   "private": true,
-  "description": "Fixture with deliberately outdated dependencies for the check-updates skill",
+  "description": "Fixture with deliberately outdated dependencies for the version-check skill",
   "scripts": {
     "build": "echo \"no build\" && exit 0",
     "test": "echo \"no tests\" && exit 0"

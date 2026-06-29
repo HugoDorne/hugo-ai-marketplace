@@ -1,12 +1,14 @@
 ---
-name: check-updates
+name: version-check
 description: >
   Check a project's dependencies for newer available versions and apply the ones the user
   chooses. Use whenever the user asks about outdated or out-of-date dependencies, available
   upgrades, bumping/updating libraries or packages, "what can I update", "are my deps current",
-  or wants to refresh Maven (pom.xml) or npm (package.json) versions. Works for Maven and
-  Node/npm projects, including multi-module Maven builds. Reports updates grouped by risk and
-  only edits files for the upgrades the user approves — it never bulk-upgrades silently.
+  or wants to refresh Maven (pom.xml) or npm (package.json) versions. French triggers:
+  "mes dépendances sont-elles à jour", "quoi mettre à jour", "vérifie les mises à jour",
+  "bump les versions", "dépendances obsolètes", "qu'est-ce que je peux mettre à jour". Works
+  for Maven and Node/npm projects, including multi-module Maven builds. Reports updates grouped
+  by risk and only edits files for the upgrades the user approves — it never bulk-upgrades silently.
 disable-model-invocation: false
 ---
 

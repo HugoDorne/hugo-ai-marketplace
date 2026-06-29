@@ -1,5 +1,0 @@
-{
-  "name": "code",
-  "version": "1.2.0",
-  "description": "Code tools: explanation, SonarQube scanning, dependency update checking, Javadoc/OpenAPI/ADR generation, Java/Spring Boot best-practices review, and JUnit test generation"
-}

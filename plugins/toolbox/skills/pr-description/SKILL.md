@@ -1,11 +1,11 @@
 ---
 name: pr-description
-description: Generate a Pull Request title in English and a description in French from the current git diff (working tree) of the directory where the skill is invoked. Use when the user asks for a PR / MR / pull request description, or types /pr-description. Readable prose accessible to junior developers, logically grouped changes (not a long bullet list).
+description: Generate a Pull Request title and description in English from the current git diff (working tree) of the directory where the skill is invoked. Use when the user asks for a PR / MR / pull request description, or types /pr-description. French triggers: "génère la description de PR", "description de la pull request", "rédige la PR", "texte pour la PR", "fais la description de ma PR". Readable prose accessible to junior developers, logically grouped changes (not a long bullet list).
 ---
 
-# PR description (EN title, FR body)
+# PR description
 
-Generate a **PR title in English** and a **PR description in French**, based on the **current** git diff (working tree) of the directory where the skill was invoked. The skill does **not** compare the branch to `main` / `master` / any base branch — it only describes the uncommitted / not-yet-pushed changes present right now.
+Generate a **PR title and description in English**, based on the **current** git diff (working tree) of the directory where the skill was invoked. The skill does **not** compare the branch to `main` / `master` / any base branch — it only describes the uncommitted / not-yet-pushed changes present right now.
 
 > **Windows skill.** All commands below are written for **Windows / PowerShell**. The clipboard is handled with the built-in `Set-Clipboard` cmdlet (always available on Windows 11), and the temp file lives under `$env:TEMP`.
 
@@ -56,14 +56,14 @@ Output exactly this — no preamble, no postscript:
 ```
 **Title:** <short English title, ~70 chars max>
 
-<multi-paragraph Markdown description in French>
+<multi-paragraph Markdown description in English>
 ```
 
 The line above showing a 3-backtick fenced block is documentation inside this SKILL.md. The actual chat output should NOT be inside any wrapping fence — write `**Title:** ...` followed by the body as plain top-level Markdown.
 
 #### Style rules
 
-- **Title in English** (plain text, no Markdown), **description in French as Markdown** (PR body), neutral and professional tone for both.
+- **Title and description both in English** — title as plain text (no Markdown), description as Markdown (PR body). Neutral and professional tone for both.
 - **Markdown formatting** for the description:
   - Use Markdown sparingly to aid readability: `**bold**` on key terms, `` `inline code` `` for identifiers / paths / commands, fenced code blocks (```` ``` ```` with a language hint when relevant) for snippets, sub-headings (`###`) only if the description has 4+ paragraphs and would benefit from explicit sections.
   - Do **not** use top-level `#` headings (the PR already has one — its title).
@@ -72,19 +72,19 @@ The line above showing a 3-backtick fenced block is documentation inside this SK
 - **Title**: single line in English, ~70 characters, descriptive, imperative mood ("Add Redis cache…", "Fix race condition…", "Refactor user resolver"). No `feat:` / `fix:` prefix unless the repo's commits or convention already use one.
 - **Short description**: aim for 3 to 6 short paragraphs, never a full page. If the diff is tiny, two sentences are enough.
 - **Readable prose**, not a wall of bullets. The description should make the reviewer want to read it. A short list is tolerated when it actually helps reading (e.g. 3 key takeaways), but it must not be the backbone of the text.
-- **Group by intent**, not file by file. Five files modified for the same reason = a single mention. Think themes: "côté API", "côté front", "tests", "configuration", "refactor de X"…
-- **Junior-friendly** (in French): avoid obscure jargon. If a precise technical term is required (e.g. *idempotence*, *circuit breaker*), a brief parenthetical explanation is enough. Prefer simple sentences and action verbs.
-- **Describe what changes**, not what the code does in the abstract. E.g. "ajoute un cache LRU sur le résolveur d'utilisateurs" rather than "le résolveur d'utilisateurs sert à…".
+- **Group by intent**, not file by file. Five files modified for the same reason = a single mention. Think themes: "API side", "front-end", "tests", "configuration", "refactor of X"…
+- **Junior-friendly**: avoid obscure jargon. If a precise technical term is required (e.g. *idempotence*, *circuit breaker*), a brief parenthetical explanation is enough. Prefer simple sentences and action verbs.
+- **Describe what changes**, not what the code does in the abstract. E.g. "adds an LRU cache on the user resolver" rather than "the user resolver is used to…".
 - **Do not speculate** on the *why* if the diff doesn't say. If the intent shows up in commit messages or a branch name like `JIRA-123-fix-...`, use it. Otherwise stay factual.
 - Mention explicitly, at the end of the description, **only if relevant**: breaking change, schema migration, new dependency, env var to add, manual deployment step. One line is enough.
 - **Do not include**: "Co-Authored-By", "Generated with Claude", tool signatures.
-- **Emojis**: allowed sparingly when they help reading, e.g. at the start of a paragraph to flag its theme (🔧 refactor, 🐛 fix, ✅ tests, ⚠️ point d'attention, 🚀 déploiement…). One emoji per paragraph max, never in the PR title, never as decoration.
-- **Paragraph titles**: when a paragraph starts with a short bold "title" (e.g. `**Migration des tests vers JUnit 5.**`), the body **must go on a new paragraph after a blank line** — never inline on the same line as the title. Pattern:
+- **Emojis**: allowed sparingly when they help reading, e.g. at the start of a paragraph to flag its theme (🔧 refactor, 🐛 fix, ✅ tests, ⚠️ heads-up, 🚀 deployment…). One emoji per paragraph max, never in the PR title, never as decoration.
+- **Paragraph titles**: when a paragraph starts with a short bold "title" (e.g. `**Migrate the tests to JUnit 5.**`), the body **must go on a new paragraph after a blank line** — never inline on the same line as the title. Pattern:
 
   ```
-  ✅ **Titre court du paragraphe.**
+  ✅ **Short paragraph title.**
 
-  Corps du paragraphe sur les lignes suivantes…
+  Paragraph body on the following lines…
   ```
 
   An emoji preceding the title is allowed and stays on the title line. A paragraph with no bold title (just plain prose, optionally led by an emoji) is fine without this split — the rule only kicks in when there is an explicit bold title.
@@ -115,7 +115,7 @@ $path = Join-Path $env:TEMP 'pr-description.md'
 @'
 **Title:** <english title>
 
-<french markdown body>
+<english markdown body>
 '@ | Set-Content -Path $path -Encoding UTF8
 
 # 2. Push it to the clipboard
@@ -125,13 +125,13 @@ Write-Output "copied to clipboard"
 
 > The closing `'@` of the here-string **must** sit at column 0 (no leading whitespace) on its own line, or PowerShell raises a parse error.
 
-**On success**, tell the user verbatim (in French):
+**On success**, tell the user verbatim:
 
-> ✅ Description copiée dans le presse-papiers — colle directement (Ctrl+V) dans le champ description de Bitbucket. Ne sélectionne-copie pas depuis ce terminal : le rendu ci-dessus n'est qu'une prévisualisation.
+> ✅ Description copied to the clipboard — paste it directly (Ctrl+V) into the Bitbucket description field. Don't select-copy from this terminal: the rendering above is only a preview.
 
 **On failure** (the unlikely case where `Set-Clipboard` is unavailable, e.g. a headless / non-Windows-PowerShell session), do **not** suggest copying from the terminal. Instead, point at the temp file:
 
-> ⚠️ Impossible de copier dans le presse-papiers automatiquement. Le markdown brut est dispo dans `%TEMP%\pr-description.md`. Pour le mettre au presse-papiers : `Get-Content $env:TEMP\pr-description.md -Raw | Set-Clipboard` (ou ouvre le fichier et copie son contenu).
+> ⚠️ Couldn't copy to the clipboard automatically. The raw markdown is available at `%TEMP%\pr-description.md`. To put it on the clipboard: `Get-Content $env:TEMP\pr-description.md -Raw | Set-Clipboard` (or open the file and copy its contents).
 
 ### 6. Stop
 
@@ -144,15 +144,15 @@ What the chat displays (the renderer styles it; the same raw text — without th
 ````
 **Title:** Add Redis cache on the user resolver
 
-Cette PR introduit un **cache Redis** devant le résolveur d'utilisateurs, identifié comme un point chaud sur les endpoints de listing. Les appels répétés au même identifiant sont désormais servis depuis le cache avec une TTL de 5 minutes.
+This PR introduces a **Redis cache** in front of the user resolver, identified as a hot spot on the listing endpoints. Repeated calls for the same identifier are now served from the cache with a 5-minute TTL.
 
-🔧 **Extraction du résolveur dans un service dédié.**
+🔧 **Extract the resolver into a dedicated service.**
 
-Pour pouvoir brancher le cache sans dupliquer la logique, le résolveur a été déplacé dans un service à part. Les appelants existants passent par la même interface qu'avant, donc rien à changer côté contrôleurs.
+To wire in the cache without duplicating logic, the resolver was moved into a separate service. Existing callers go through the same interface as before, so nothing changes on the controller side.
 
-⚙️ **Nouvelle configuration `users.cache.ttl`.**
+⚙️ **New `users.cache.ttl` configuration.**
 
-Une nouvelle propriété a été ajoutée (valeur par défaut : `5m`), et la connexion Redis réutilise le bean déjà présent pour les sessions :
+A new property was added (default value: `5m`), and the Redis connection reuses the bean already present for sessions:
 
 ```yaml
 users:
@@ -160,13 +160,13 @@ users:
     ttl: 5m
 ```
 
-✅ **Couverture de tests étendue.**
+✅ **Extended test coverage.**
 
-Les tests unitaires du résolveur ont été complétés pour couvrir les cas *hit* / *miss*, et un test d'intégration vérifie l'invalidation lors d'une mise à jour utilisateur.
+The resolver's unit tests were completed to cover the *hit* / *miss* cases, and an integration test verifies invalidation on a user update.
 
-⚠️ À noter : pensez à vérifier que la variable `REDIS_URL` est bien définie dans les environnements de staging et prod avant le merge.
+⚠️ Heads-up: make sure the `REDIS_URL` variable is defined in the staging and prod environments before merging.
 ````
 
 Followed in the chat (separately, after the rendered preview) by:
 
-> ✅ Description copiée dans le presse-papiers — colle directement (Ctrl+V) dans le champ description de Bitbucket. Ne sélectionne-copie pas depuis ce terminal : le rendu ci-dessus n'est qu'une prévisualisation.
+> ✅ Description copied to the clipboard — paste it directly (Ctrl+V) into the Bitbucket description field. Don't select-copy from this terminal: the rendering above is only a preview.

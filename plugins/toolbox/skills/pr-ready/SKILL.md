@@ -1,6 +1,6 @@
 ---
 name: pr-ready
-description: Check whether the current branch is ready to open a Pull Request — verifies dev & PR conventions (clean working tree, changelog updated, tests present and passing, code quality, coherent diff) and returns a Pass/Fail checklist with a global verdict. Use when the user asks "is my PR ready", "can I open the PR", "check before I push/merge", asks for a pre-PR / pre-merge review, or types /pr-ready. Report only — it never modifies the code.
+description: Check whether the current branch is ready to open a Pull Request — verifies dev & PR conventions (clean working tree, changelog updated, tests present and passing, code quality, coherent diff) and returns a Pass/Fail checklist with a global verdict. Use when the user asks "is my PR ready", "can I open the PR", "check before I push/merge", or types /pr-ready. French triggers: "est-ce que ma PR est prête", "je peux ouvrir la PR", "check avant la PR", "review avant merge", "vérifie avant de push". Report only — it never modifies the code. Respond in the language of the conversation.
 ---
 
 # PR ready — pre-PR convention check
@@ -13,7 +13,7 @@ This skill **reports only — it never edits code, never commits, never pushes, 
 
 ## When to use
 
-The user is about to open a PR / MR and wants a sanity check first, or types `/pr-ready`. Typical phrasings: "est-ce que ma PR est prête ?", "je peux push ?", "check avant la PR", "review avant merge". The skill does **not** create the PR — pair it with `pr-description` once the verdict is green.
+The user is about to open a PR / MR and wants a sanity check first, or types `/pr-ready`. Typical phrasings: "is my PR ready?", "can I push?", "check before the PR", "review before merge" — and their French equivalents ("est-ce que ma PR est prête ?", "je peux push ?", "check avant la PR", "review avant merge"). The skill does **not** create the PR — pair it with `pr-description` once the verdict is green.
 
 ## Output language
 
@@ -31,7 +31,7 @@ git status --short
 ```
 
 - If `git rev-parse` fails → tell the user the skill must run inside a git repo, and stop.
-- If `git status --short` shows **any** staged, unstaged, or untracked change → **stop and ask the user to commit (or stash) first.** Do not analyze a dirty tree. Phrase it plainly, e.g.: "Ton working-tree n'est pas propre — commit (ou stash) tes changements puis relance `/pr-ready`, pour que l'audit porte sur ce qui partira vraiment dans la PR." List the dirty files so they know what's pending. Then stop.
+- If `git status --short` shows **any** staged, unstaged, or untracked change → **stop and ask the user to commit (or stash) first.** Do not analyze a dirty tree. Phrase it plainly, e.g.: "Your working tree isn't clean — commit (or stash) your changes then re-run `/pr-ready`, so the audit reflects what will actually land in the PR." List the dirty files so they know what's pending. Then stop.
 
 Only once the tree is clean do you continue.
 
@@ -82,7 +82,7 @@ Group findings under the categories below. For each check, assign a status:
 - **❌ Fail** — convention violated; should be fixed before the PR.
 - **➖ N/A** — doesn't apply to this repo (say why).
 
-**Hybrid execution model:** *inspect everything*, *run the cheap checks now*, and *propose the expensive ones*. Cheap = compile + lint (seconds). Expensive = full test suite + coverage (can be minutes). Run the cheap ones automatically; for the expensive ones, run them if the user already asked for a full check, otherwise inspect statically and offer to run them ("Je peux lancer `mvn verify` si tu veux la confirmation runtime — ça prend ~2 min").
+**Hybrid execution model:** *inspect everything*, *run the cheap checks now*, and *propose the expensive ones*. Cheap = compile + lint (seconds). Expensive = full test suite + coverage (can be minutes). Run the cheap ones automatically; for the expensive ones, run them if the user already asked for a full check, otherwise inspect statically and offer to run them ("I can run `mvn verify` if you want the runtime confirmation — it takes ~2 min").
 
 #### A. Changelog
 
@@ -113,7 +113,6 @@ Report the real outcome. If a command errors for environment reasons (missing DB
 
 - **Run a linter / static analysis if the repo configures one:** Checkstyle/Spotless/PMD (Maven), ESLint (`npm run lint`), Ruff/Flake8 (Python). Report the count by severity.
 - **Scan the diff** for smells regardless of tooling: leftover debug (`System.out.println`, `console.log`, `print(` / `pprint`), `TODO` / `FIXME` introduced by this branch, commented-out code blocks, obviously dead code, hardcoded secrets / tokens / passwords / URLs, overly long methods, duplicated blocks.
-- If the `code:sonar` skill is available and the user wants depth, mention it for a fuller scan — but don't auto-invoke it.
 
 #### E. Dev coherence
 
@@ -134,32 +133,32 @@ This is the "does this hang together as one change" check — judgment, not tool
 
 ### 5. Write the report
 
-Print the report **directly** in the chat (no wrapping code fence). Use this structure, translated to the conversation language:
+Print the report **directly** in the chat (no wrapping code fence). Use this structure, translated to the conversation language (the labels below are shown in English for reference):
 
 ```
 ## PR ready — <branch> → <base>
 
-**Verdict : <✅ Prête / ⚠️ Presque / ❌ Pas prête>**
+**Verdict: <✅ Ready / ⚠️ Almost / ❌ Not ready>**
 
 <one-sentence summary of why>
 
 ### Checklist
 - <✅/⚠️/❌/➖> **Changelog** — <short finding>
-- <✅/⚠️/❌/➖> **Couverture de test** — <short finding>
+- <✅/⚠️/❌/➖> **Test coverage** — <short finding>
 - <✅/⚠️/❌/➖> **Tests** — <short finding (ran? command?)>
-- <✅/⚠️/❌/➖> **Qualité du code** — <short finding>
-- <✅/⚠️/❌/➖> **Cohérence du dev** — <short finding>
-- <✅/⚠️/❌/➖> **Hygiène PR** — <short finding>
+- <✅/⚠️/❌/➖> **Code quality** — <short finding>
+- <✅/⚠️/❌/➖> **Dev coherence** — <short finding>
+- <✅/⚠️/❌/➖> **PR hygiene** — <short finding>
 
-### À corriger avant la PR
+### To fix before the PR
 1. <actionable item, with file:line where useful>
 2. …
 
-### Checks lourds non lancés (optionnel)
-- <e.g. "Suite complète : `mvn verify` (~2 min)"> — dis-moi si tu veux que je les lance.
+### Expensive checks not run (optional)
+- <e.g. "Full suite: `mvn verify` (~2 min)"> — tell me if you want me to run them.
 ```
 
-**Verdict rule of thumb:** any ❌ → `❌ Pas prête`. No ❌ but one or more ⚠️ → `⚠️ Presque`. All ✅/➖ → `✅ Prête`. Keep the "À corriger" list ordered by impact (failures first), and tie each item to a concrete location so the fix is obvious.
+**Verdict rule of thumb:** any ❌ → `❌ Not ready`. No ❌ but one or more ⚠️ → `⚠️ Almost`. All ✅/➖ → `✅ Ready`. Keep the "To fix" list ordered by impact (failures first), and tie each item to a concrete location so the fix is obvious.
 
 Be honest and concise. The value of this skill is a trustworthy verdict — don't soften a real ❌ into a ⚠️, and don't inflate nitpicks into blockers. If everything is genuinely clean, a short green report is the right answer.
 
@@ -167,27 +166,29 @@ Be honest and concise. The value of this skill is a trustworthy verdict — don'
 
 Do not edit, commit, push, or open the PR. Offer to run any expensive checks the user skipped, or to hand off to `pr-description` once the verdict is green — then stop.
 
-## Example output (French)
+## Example output
+
+(Shown in English here; in practice the report is written in the conversation's language.)
 
 ```
 ## PR ready — feature/cache-redis → origin/main
 
-**Verdict : ⚠️ Presque**
+**Verdict: ⚠️ Almost**
 
-Le code compile et les tests passent, mais le changelog n'est pas à jour et un service public n'a pas de test.
+The code compiles and the tests pass, but the changelog isn't updated and a public service has no test.
 
 ### Checklist
-- ❌ **Changelog** — `CHANGELOG.md` existe mais n'a pas d'entrée pour le cache Redis.
-- ⚠️ **Couverture de test** — `UserResolver` est testé (hit/miss), mais `CacheMetricsService` (nouveau, public) n'a aucun test.
-- ✅ **Tests** — `mvn test` lancé : 142 tests, 0 échec.
-- ✅ **Qualité du code** — Checkstyle : 0 erreur. Aucun `System.out.println` ni TODO introduit.
-- ✅ **Cohérence du dev** — diff centré sur le cache, messages de commit cohérents (`INCAS-1234 …`).
-- ➖ **Hygiène PR** — pas de migration, pas de nouvelle dépendance, pas de secret.
+- ❌ **Changelog** — `CHANGELOG.md` exists but has no entry for the Redis cache.
+- ⚠️ **Test coverage** — `UserResolver` is tested (hit/miss), but `CacheMetricsService` (new, public) has no test.
+- ✅ **Tests** — `mvn test` ran: 142 tests, 0 failures.
+- ✅ **Code quality** — Checkstyle: 0 errors. No `System.out.println` or TODO introduced.
+- ✅ **Dev coherence** — diff focused on the cache, coherent commit messages (`INCAS-1234 …`).
+- ➖ **PR hygiene** — no migration, no new dependency, no secret.
 
-### À corriger avant la PR
-1. Ajouter une entrée dans `CHANGELOG.md` (section *Unreleased*) pour le cache Redis sur le résolveur d'utilisateurs.
-2. Couvrir `CacheMetricsService` (`src/main/java/.../CacheMetricsService.java:18`) — au moins le cas nominal d'incrément des compteurs.
+### To fix before the PR
+1. Add an entry in `CHANGELOG.md` (*Unreleased* section) for the Redis cache on the user resolver.
+2. Cover `CacheMetricsService` (`src/main/java/.../CacheMetricsService.java:18`) — at least the nominal counter-increment case.
 
-### Checks lourds non lancés
-- Coverage mesurée : `mvn verify` (JaCoCo, ~2 min) — dis-moi si tu veux le chiffre exact.
+### Expensive checks not run
+- Measured coverage: `mvn verify` (JaCoCo, ~2 min) — tell me if you want the exact figure.
 ```

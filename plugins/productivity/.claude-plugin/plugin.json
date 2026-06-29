@@ -1,5 +1,0 @@
-{
-  "name": "productivity",
-  "version": "1.1.0",
-  "description": "Productivity skills for Claude Code: smart conversation compaction with auto-generated summaries, PR description generation (EN title, FR body) from the current git diff, and a pre-PR readiness check (changelog, tests, coverage, code quality, diff coherence)"
-}

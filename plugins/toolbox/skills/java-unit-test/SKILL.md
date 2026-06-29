@@ -1,6 +1,6 @@
 ---
 name: java-unit-test
-description: Generate Java Spring Boot JUnit 5 unit tests with AssertJ, @Nested classes, and behavioral naming
+description: Generate Java Spring Boot JUnit 5 unit tests with AssertJ, @Nested classes, and behavioral naming. Use when the user asks to write or generate unit tests for Java/Spring code. French triggers: "écris des tests unitaires", "génère les tests JUnit", "teste cette classe", "ajoute des tests pour", "crée les tests unitaires".
 disable-model-invocation: false
 ---
 

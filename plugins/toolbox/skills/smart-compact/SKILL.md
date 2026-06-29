@@ -3,7 +3,9 @@ name: smart-compact
 description: >
   Compact the conversation context while preserving what matters most. Use this skill
   whenever the user runs /smart-compact or asks to "compact", "summarize and compact",
-  or "clean up the context". It generates a structured summary of the session — what
+  or "clean up the context". French triggers: "compacte la conversation", "résume et
+  compacte", "nettoie le contexte", "fais un résumé de la session". It generates a structured
+  summary of the session — what
   was worked on, what changed, decisions made, and what's still pending — then triggers
   /compact with that summary as the guiding prompt so the compacted context retains
   the right information for the next session.

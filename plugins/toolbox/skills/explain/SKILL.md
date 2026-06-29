@@ -4,8 +4,9 @@ description: >
   Explain how code works — purpose, an ASCII flow/structure diagram, a step-by-step
   walkthrough, key design decisions, and gotchas. Use whenever the user wants to understand
   a file, class, method, or feature they didn't write or have forgotten: "how does this work",
-  "walk me through this", "what does this do", "explain this code/function", or when onboarding
-  to an unfamiliar part of a codebase.
+  "walk me through this", "what does this do", "explain this code/function". French triggers:
+  "comment ça marche", "explique-moi ce code", "à quoi sert cette fonction", "explique cette
+  classe", "détaille ce que fait ce code". Also when onboarding to an unfamiliar part of a codebase.
 disable-model-invocation: false
 ---
 

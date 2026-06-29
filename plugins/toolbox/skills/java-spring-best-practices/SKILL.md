@@ -1,6 +1,6 @@
 ---
 name: java-spring-best-practices
-description: Java Spring Boot best practices for writing and reviewing code — covers security, Spring patterns, Java idioms, code conventions, testing, SQL migrations, and SOLID design.
+description: Java Spring Boot best practices for writing and reviewing code — covers security, Spring patterns, Java idioms, code conventions, testing, SQL migrations, and SOLID design. Use when the user asks to review or improve Java/Spring Boot code, or to apply best practices. French triggers: "bonnes pratiques Spring", "revois ce code Java", "améliore ce code Spring", "respecte les conventions Java", "ce code Spring est-il correct".
 disable-model-invocation: false
 ---
 
