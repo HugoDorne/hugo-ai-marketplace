@@ -1,11 +1,11 @@
 ---
 name: pr-description
-description: Generate a Pull Request title and description in English from the current git diff (working tree) of the directory where the skill is invoked. Use when the user asks for a PR / MR / pull request description, or types /pr-description. French triggers: "génère la description de PR", "description de la pull request", "rédige la PR", "texte pour la PR", "fais la description de ma PR". Readable prose accessible to junior developers, logically grouped changes (not a long bullet list).
+description: Generate a Pull Request title and description in French (always French output, regardless of the conversation language) from the current git diff (working tree) of the directory where the skill is invoked. Use when the user asks for a PR / MR / pull request description, or types /pr-description. French triggers: "génère la description de PR", "description de la pull request", "rédige la PR", "texte pour la PR", "fais la description de ma PR". Readable prose accessible to junior developers, logically grouped changes (not a long bullet list).
 ---
 
-# PR description
+# PR description (always French output)
 
-Generate a **PR title and description in English**, based on the **current** git diff (working tree) of the directory where the skill was invoked. The skill does **not** compare the branch to `main` / `master` / any base branch — it only describes the uncommitted / not-yet-pushed changes present right now.
+Generate a **PR title and description in French**, based on the **current** git diff (working tree) of the directory where the skill was invoked. The output is **always in French**, regardless of the language the conversation is happening in. The skill does **not** compare the branch to `main` / `master` / any base branch — it only describes the uncommitted / not-yet-pushed changes present right now.
 
 > **Windows skill.** All commands below are written for **Windows / PowerShell**. The clipboard is handled with the built-in `Set-Clipboard` cmdlet (always available on Windows 11), and the temp file lives under `$env:TEMP`.
 
@@ -54,37 +54,37 @@ Print the Markdown **directly** in the chat — no outer wrapper, no ` ```markdo
 Output exactly this — no preamble, no postscript:
 
 ```
-**Title:** <short English title, ~70 chars max>
+**Titre :** <titre court en français, ~70 caractères max>
 
-<multi-paragraph Markdown description in English>
+<description Markdown multi-paragraphes en français>
 ```
 
-The line above showing a 3-backtick fenced block is documentation inside this SKILL.md. The actual chat output should NOT be inside any wrapping fence — write `**Title:** ...` followed by the body as plain top-level Markdown.
+The line above showing a 3-backtick fenced block is documentation inside this SKILL.md. The actual chat output should NOT be inside any wrapping fence — write `**Titre :** ...` followed by the body as plain top-level Markdown.
 
 #### Style rules
 
-- **Title and description both in English** — title as plain text (no Markdown), description as Markdown (PR body). Neutral and professional tone for both.
+- **Title and description both in French** — title as plain text (no Markdown), description as Markdown (PR body). Neutral and professional tone for both. **Always French, even if the conversation is in English.**
 - **Markdown formatting** for the description:
   - Use Markdown sparingly to aid readability: `**bold**` on key terms, `` `inline code` `` for identifiers / paths / commands, fenced code blocks (```` ``` ```` with a language hint when relevant) for snippets, sub-headings (`###`) only if the description has 4+ paragraphs and would benefit from explicit sections.
   - Do **not** use top-level `#` headings (the PR already has one — its title).
   - Links use the `[label](url)` form. Reference-style links are fine if reused.
   - Stick to plain Markdown — no HTML, no Bitbucket-specific extensions.
-- **Title**: single line in English, ~70 characters, descriptive, imperative mood ("Add Redis cache…", "Fix race condition…", "Refactor user resolver"). No `feat:` / `fix:` prefix unless the repo's commits or convention already use one.
+- **Title**: single line in French, ~70 characters, descriptive, imperative mood ("Ajoute un cache Redis…", "Corrige la race condition…", "Refactore le résolveur d'utilisateurs"). No `feat:` / `fix:` prefix unless the repo's commits or convention already use one.
 - **Short description**: aim for 3 to 6 short paragraphs, never a full page. If the diff is tiny, two sentences are enough.
 - **Readable prose**, not a wall of bullets. The description should make the reviewer want to read it. A short list is tolerated when it actually helps reading (e.g. 3 key takeaways), but it must not be the backbone of the text.
-- **Group by intent**, not file by file. Five files modified for the same reason = a single mention. Think themes: "API side", "front-end", "tests", "configuration", "refactor of X"…
+- **Group by intent**, not file by file. Five files modified for the same reason = a single mention. Think themes: "côté API", "côté front", "tests", "configuration", "refactor de X"…
 - **Junior-friendly**: avoid obscure jargon. If a precise technical term is required (e.g. *idempotence*, *circuit breaker*), a brief parenthetical explanation is enough. Prefer simple sentences and action verbs.
-- **Describe what changes**, not what the code does in the abstract. E.g. "adds an LRU cache on the user resolver" rather than "the user resolver is used to…".
+- **Describe what changes**, not what the code does in the abstract. E.g. "ajoute un cache LRU sur le résolveur d'utilisateurs" rather than "le résolveur d'utilisateurs sert à…".
 - **Do not speculate** on the *why* if the diff doesn't say. If the intent shows up in commit messages or a branch name like `JIRA-123-fix-...`, use it. Otherwise stay factual.
 - Mention explicitly, at the end of the description, **only if relevant**: breaking change, schema migration, new dependency, env var to add, manual deployment step. One line is enough.
 - **Do not include**: "Co-Authored-By", "Generated with Claude", tool signatures.
-- **Emojis**: allowed sparingly when they help reading, e.g. at the start of a paragraph to flag its theme (🔧 refactor, 🐛 fix, ✅ tests, ⚠️ heads-up, 🚀 deployment…). One emoji per paragraph max, never in the PR title, never as decoration.
-- **Paragraph titles**: when a paragraph starts with a short bold "title" (e.g. `**Migrate the tests to JUnit 5.**`), the body **must go on a new paragraph after a blank line** — never inline on the same line as the title. Pattern:
+- **Emojis**: allowed sparingly when they help reading, e.g. at the start of a paragraph to flag its theme (🔧 refactor, 🐛 fix, ✅ tests, ⚠️ point d'attention, 🚀 déploiement…). One emoji per paragraph max, never in the PR title, never as decoration.
+- **Paragraph titles**: when a paragraph starts with a short bold "title" (e.g. `**Migration des tests vers JUnit 5.**`), the body **must go on a new paragraph after a blank line** — never inline on the same line as the title. Pattern:
 
   ```
-  ✅ **Short paragraph title.**
+  ✅ **Titre court du paragraphe.**
 
-  Paragraph body on the following lines…
+  Corps du paragraphe sur les lignes suivantes…
   ```
 
   An emoji preceding the title is allowed and stays on the title line. A paragraph with no bold title (just plain prose, optionally led by an emoji) is fine without this split — the rule only kicks in when there is an explicit bold title.
@@ -113,9 +113,9 @@ Write the content to a temp file first, then push it to the clipboard. Going thr
 # 1. Write the raw markdown to a temp file (single-quoted here-string = literal, no $ / backtick expansion)
 $path = Join-Path $env:TEMP 'pr-description.md'
 @'
-**Title:** <english title>
+**Titre :** <titre français>
 
-<english markdown body>
+<corps de la description en français>
 '@ | Set-Content -Path $path -Encoding UTF8
 
 # 2. Push it to the clipboard
@@ -125,13 +125,13 @@ Write-Output "copied to clipboard"
 
 > The closing `'@` of the here-string **must** sit at column 0 (no leading whitespace) on its own line, or PowerShell raises a parse error.
 
-**On success**, tell the user verbatim:
+**On success**, tell the user verbatim (in French):
 
-> ✅ Description copied to the clipboard — paste it directly (Ctrl+V) into the Bitbucket description field. Don't select-copy from this terminal: the rendering above is only a preview.
+> ✅ Description copiée dans le presse-papiers — colle directement (Ctrl+V) dans le champ description de Bitbucket. Ne sélectionne-copie pas depuis ce terminal : le rendu ci-dessus n'est qu'une prévisualisation.
 
-**On failure** (the unlikely case where `Set-Clipboard` is unavailable, e.g. a headless / non-Windows-PowerShell session), do **not** suggest copying from the terminal. Instead, point at the temp file:
+**On failure** (the unlikely case where `Set-Clipboard` is unavailable, e.g. a headless / non-Windows-PowerShell session), do **not** suggest copying from the terminal. Instead, point at the temp file (in French):
 
-> ⚠️ Couldn't copy to the clipboard automatically. The raw markdown is available at `%TEMP%\pr-description.md`. To put it on the clipboard: `Get-Content $env:TEMP\pr-description.md -Raw | Set-Clipboard` (or open the file and copy its contents).
+> ⚠️ Impossible de copier dans le presse-papiers automatiquement. Le markdown brut est dispo dans `%TEMP%\pr-description.md`. Pour le mettre au presse-papiers : `Get-Content $env:TEMP\pr-description.md -Raw | Set-Clipboard` (ou ouvre le fichier et copie son contenu).
 
 ### 6. Stop
 
@@ -139,20 +139,20 @@ Do not create the PR, do not push, do not call Bitbucket. Once the rendered prev
 
 ## Example output
 
-What the chat displays (the renderer styles it; the same raw text — without the outer 4-backtick fence shown here for documentation — is what lands on the clipboard):
+What the chat displays (the renderer styles it; the same raw text — without the outer 4-backtick fence shown here for documentation — is what lands on the clipboard). **The output is always French:**
 
 ````
-**Title:** Add Redis cache on the user resolver
+**Titre :** Ajoute un cache Redis sur le résolveur d'utilisateurs
 
-This PR introduces a **Redis cache** in front of the user resolver, identified as a hot spot on the listing endpoints. Repeated calls for the same identifier are now served from the cache with a 5-minute TTL.
+Cette PR introduit un **cache Redis** devant le résolveur d'utilisateurs, identifié comme un point chaud sur les endpoints de listing. Les appels répétés au même identifiant sont désormais servis depuis le cache avec une TTL de 5 minutes.
 
-🔧 **Extract the resolver into a dedicated service.**
+🔧 **Extraction du résolveur dans un service dédié.**
 
-To wire in the cache without duplicating logic, the resolver was moved into a separate service. Existing callers go through the same interface as before, so nothing changes on the controller side.
+Pour pouvoir brancher le cache sans dupliquer la logique, le résolveur a été déplacé dans un service à part. Les appelants existants passent par la même interface qu'avant, donc rien à changer côté contrôleurs.
 
-⚙️ **New `users.cache.ttl` configuration.**
+⚙️ **Nouvelle configuration `users.cache.ttl`.**
 
-A new property was added (default value: `5m`), and the Redis connection reuses the bean already present for sessions:
+Une nouvelle propriété a été ajoutée (valeur par défaut : `5m`), et la connexion Redis réutilise le bean déjà présent pour les sessions :
 
 ```yaml
 users:
@@ -160,13 +160,13 @@ users:
     ttl: 5m
 ```
 
-✅ **Extended test coverage.**
+✅ **Couverture de tests étendue.**
 
-The resolver's unit tests were completed to cover the *hit* / *miss* cases, and an integration test verifies invalidation on a user update.
+Les tests unitaires du résolveur ont été complétés pour couvrir les cas *hit* / *miss*, et un test d'intégration vérifie l'invalidation lors d'une mise à jour utilisateur.
 
-⚠️ Heads-up: make sure the `REDIS_URL` variable is defined in the staging and prod environments before merging.
+⚠️ À noter : pensez à vérifier que la variable `REDIS_URL` est bien définie dans les environnements de staging et prod avant le merge.
 ````
 
 Followed in the chat (separately, after the rendered preview) by:
 
-> ✅ Description copied to the clipboard — paste it directly (Ctrl+V) into the Bitbucket description field. Don't select-copy from this terminal: the rendering above is only a preview.
+> ✅ Description copiée dans le presse-papiers — colle directement (Ctrl+V) dans le champ description de Bitbucket. Ne sélectionne-copie pas depuis ce terminal : le rendu ci-dessus n'est qu'une prévisualisation.

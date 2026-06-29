@@ -1,5 +1,5 @@
 {
   "name": "toolbox",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Hugo's dev & productivity toolbox: code explanation, dependency version checks, Java/Spring documentation (Javadoc/OpenAPI/ADR), best-practices review, JUnit test generation, PR description generation, a pre-PR readiness check, and smart session compaction."
 }
