@@ -7,6 +7,8 @@ description: Generate a Pull Request title in English and a description in Frenc
 
 Generate a **PR title in English** and a **PR description in French**, based on the **current** git diff (working tree) of the directory where the skill was invoked. The skill does **not** compare the branch to `main` / `master` / any base branch — it only describes the uncommitted / not-yet-pushed changes present right now.
 
+> **Windows skill.** All commands below are written for **Windows / PowerShell**. The clipboard is handled with the built-in `Set-Clipboard` cmdlet (always available on Windows 11), and the temp file lives under `$env:TEMP`.
+
 ## When to use
 
 The user asks for a PR / MR / pull request description, or types `/pr-description`. The skill does not create the PR. It does two things: (1) prints the rendered Markdown in the chat as a human-readable preview, and (2) pushes the **raw** Markdown source to the system clipboard so the user can paste it straight into the Bitbucket UI with Ctrl+V. The clipboard is the canonical paste source — never ask the user to select-copy from the terminal.
@@ -15,7 +17,7 @@ The user asks for a PR / MR / pull request description, or types `/pr-descriptio
 
 ### 1. Verify we're inside a git repo
 
-```bash
+```powershell
 git rev-parse --is-inside-work-tree
 ```
 
@@ -27,7 +29,7 @@ If this fails: tell the user the skill must be run from inside a git repo, and s
 
 Always **scope to the current directory** with `-- .` — the skill describes what changes in the subfolder where it was invoked, not the whole repo.
 
-```bash
+```powershell
 # overview
 git status --short -- .
 
@@ -105,37 +107,31 @@ If anything is off, **fix it silently** — do not print broken Markdown and the
 
 Push the raw Markdown (title + description) to the system clipboard so the user can paste it straight into the Bitbucket UI. **This is the canonical paste source** — the rendered block in the chat is only a preview.
 
-Write the content to a temp file first, then pipe it. This avoids shell-quoting issues with backticks, `$`, etc.
+Write the content to a temp file first, then push it to the clipboard. Going through a file (with a single-quoted here-string) avoids any quoting issue with backticks, `$`, etc.
 
-```bash
-# 1. Write the raw markdown to a temp file
-cat > /tmp/pr-description.md <<'PR_DESC_EOF'
+```powershell
+# 1. Write the raw markdown to a temp file (single-quoted here-string = literal, no $ / backtick expansion)
+$path = Join-Path $env:TEMP 'pr-description.md'
+@'
 **Title:** <english title>
 
 <french markdown body>
-PR_DESC_EOF
+'@ | Set-Content -Path $path -Encoding UTF8
 
-# 2. Push it to the clipboard, trying tools in order
-if command -v wl-copy >/dev/null 2>&1 && [ -n "$WAYLAND_DISPLAY" ]; then
-  wl-copy < /tmp/pr-description.md && echo "copied via wl-copy"
-elif command -v xclip >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
-  xclip -selection clipboard < /tmp/pr-description.md && echo "copied via xclip"
-elif command -v xsel >/dev/null 2>&1 && [ -n "$DISPLAY" ]; then
-  xsel --clipboard --input < /tmp/pr-description.md && echo "copied via xsel"
-elif command -v pbcopy >/dev/null 2>&1; then
-  pbcopy < /tmp/pr-description.md && echo "copied via pbcopy"
-else
-  echo "no clipboard tool found"
-fi
+# 2. Push it to the clipboard
+Get-Content $path -Raw | Set-Clipboard
+Write-Output "copied to clipboard"
 ```
+
+> The closing `'@` of the here-string **must** sit at column 0 (no leading whitespace) on its own line, or PowerShell raises a parse error.
 
 **On success**, tell the user verbatim (in French):
 
 > ✅ Description copiée dans le presse-papiers — colle directement (Ctrl+V) dans le champ description de Bitbucket. Ne sélectionne-copie pas depuis ce terminal : le rendu ci-dessus n'est qu'une prévisualisation.
 
-**On failure** (no clipboard tool, headless session, etc.), do **not** suggest copying from the terminal. Instead, point at the temp file:
+**On failure** (the unlikely case where `Set-Clipboard` is unavailable, e.g. a headless / non-Windows-PowerShell session), do **not** suggest copying from the terminal. Instead, point at the temp file:
 
-> ⚠️ Impossible de copier dans le presse-papiers automatiquement. Le markdown brut est dispo dans `/tmp/pr-description.md`. Pour le mettre au presse-papiers : `cat /tmp/pr-description.md | xclip -selection clipboard` (installe `xclip` ou `wl-clipboard` si nécessaire).
+> ⚠️ Impossible de copier dans le presse-papiers automatiquement. Le markdown brut est dispo dans `%TEMP%\pr-description.md`. Pour le mettre au presse-papiers : `Get-Content $env:TEMP\pr-description.md -Raw | Set-Clipboard` (ou ouvre le fichier et copie son contenu).
 
 ### 6. Stop
 
