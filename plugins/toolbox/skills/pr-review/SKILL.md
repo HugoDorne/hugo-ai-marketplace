@@ -62,6 +62,30 @@ thread often explains a decision that would otherwise look like a bug.
 
 If the PR is `MERGED` or `DECLINED`, say so before reviewing — the findings may be moot.
 
+### 1b. Read the ticket — "is this the right change?", not just "is this code correct?"
+
+Extract the ticket key from the PR title, the source branch, or the description (`INCAS-350`,
+`IS-107470` — anything matching `[A-Z][A-Z0-9]+-\d+`) and read it via the **Atlassian / Jira MCP
+tools** (`getJiraIssue`, and its comments). No key, or Jira unreachable? Say so in one line and
+review the code on its own terms.
+
+Everything else in this skill checks whether the code does what it says. Only the ticket tells you
+whether what it says is what was asked for — and that's a class of problem no amount of diff-reading
+finds. A flawless implementation of the wrong scope still costs someone a round trip.
+
+Read the **comments as well as the description**. Acceptance criteria get renegotiated there, and an
+unanswered product question in the comments is frequently the most valuable thing you can surface.
+
+Compare ticket against diff:
+
+- **Unmet acceptance criteria** — an AC with no corresponding code. Name the AC.
+- **Scope beyond the ticket** — often legitimate (a Figma detail, a folded-in sibling ticket), so ask
+  rather than assert. "The AC only mentions X; Y came from …?" is the right shape.
+- **Questions the ticket left open** that the code has now silently answered one way.
+
+Put these under **open questions**, not under a severity. Scope is the author's and the PM's call,
+and a reviewer who rules on it burns credibility they'll want for the real blockers.
+
 ### 2. Take the destination branch from the API, never assume `master`
 
 **Stacked PRs are the easiest way to produce a badly wrong review.** When PR B targets PR A's branch
@@ -178,6 +202,10 @@ Write the report in the conversation, in the language the user is speaking. Anch
 - **[blocker]** `path/File.java:42` — <what's wrong and why it matters>
 - **[issue]** `path/Other.java:17` — <…>
 - **[nitpick]** `path/Third.java:88` — <…>
+
+### Open questions
+- **Scope vs <TICKET-KEY>** — <unmet AC, or scope the ticket doesn't mention, phrased as a question>
+- <an unanswered question from the ticket's comments that this PR settles implicitly>
 
 ### Verified / assumed
 - Verified: <what you actually checked in the tree>

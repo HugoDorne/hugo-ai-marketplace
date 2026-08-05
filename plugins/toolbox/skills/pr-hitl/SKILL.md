@@ -62,6 +62,33 @@ repeating a point a colleague already made wastes everyone's time.
 If the PR is `MERGED` or `DECLINED`, say so and ask whether to continue (a walkthrough of merged
 code is still perfectly useful for learning; a review of it is mostly moot).
 
+### 1b. Read the ticket — it's the intent the code is meant to serve
+
+Pull the ticket key out of the PR title, the source branch, or the description (`INCAS-350`,
+`IS-107470` — anything matching `[A-Z][A-Z0-9]+-\d+`) and read it through the **Atlassian / Jira MCP
+tools** (`getJiraIssue`, plus its comments). If there's no key, or Jira isn't reachable, say so in one
+line and carry on — the walkthrough still works, you just can't speak to intent.
+
+This matters more for a learning session than for a verdict. Understanding *why* a change exists
+starts with the problem someone was asked to solve, and the ticket is where that lives — along with
+the domain vocabulary the code assumes you already know. Reading the code first and the ticket never
+is how you end up understanding the mechanics of a change but not its purpose.
+
+Read the **comments too**, not just the description. Acceptance criteria get renegotiated in
+comments, and an unanswered product question there is often the most useful thing in the whole PR.
+
+Then hold the ticket and the diff side by side:
+
+- **Does the PR satisfy the acceptance criteria?** If an AC has no corresponding code, name it.
+- **Does it do more than the ticket asks?** Extra scope isn't automatically wrong — it's frequently
+  a Figma detail or a sibling ticket the author folded in — but it should be a conscious choice, so
+  raise it as a question rather than a finding.
+- **Is anything in the ticket still unresolved?** An open PM question that the code has quietly
+  answered one way is worth surfacing before it ships.
+
+Scope belongs to the author and the PM, never to you. Frame these as questions, and put them in the
+open-questions part of the TL;DR rather than in the severity list.
+
 ### 2. Take the destination branch from the API, never assume `master`
 
 **Stacked PRs are common here** and are the single easiest way to produce a badly wrong review. When

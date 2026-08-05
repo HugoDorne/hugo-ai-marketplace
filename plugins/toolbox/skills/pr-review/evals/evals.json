@@ -20,7 +20,8 @@
         "review.md distinguishes what was verified in the working tree from what is inferred",
         "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
         "review.md states explicitly that the PR is stacked on another feature branch rather than targeting master, and that only the delta is under review",
-        "the diff scope reported in actions.log is the destination-based delta (10 files, +320/-21), not the master-based diff (11 files, +485/-47)"
+        "the diff scope reported in actions.log is the destination-based delta (10 files, +320/-21), not the master-based diff (11 files, +485/-47)",
+        "the ticket key was extracted from the PR and read via the Jira MCP (getJiraIssue), and review.md compares the PR's scope against the ticket's acceptance criteria, raising any mismatch as an open question rather than as a severity-ranked finding"
       ]
     },
     {
@@ -41,7 +42,8 @@
         "review.md distinguishes what was verified in the working tree from what is inferred",
         "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
         "review.md is written in French, matching the language the user used",
-        "the http:// (not https://) URL was parsed into repo slug + PR id without an error or a request for clarification"
+        "the http:// (not https://) URL was parsed into repo slug + PR id without an error or a request for clarification",
+        "the ticket key was extracted from the PR and read via the Jira MCP (getJiraIssue), and review.md compares the PR's scope against the ticket's acceptance criteria, raising any mismatch as an open question rather than as a severity-ranked finding"
       ]
     },
     {
@@ -63,7 +65,8 @@
         "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
         "review.md states explicitly that the PR is stacked on another feature branch rather than targeting master, and that only the delta is under review",
         "review.md is written in French, matching the language the user used",
-        "the explicit request for comments did not bypass the permission gate — the comments are shown as proposals awaiting approval"
+        "the explicit request for comments did not bypass the permission gate — the comments are shown as proposals awaiting approval",
+        "the ticket key was extracted from the PR and read via the Jira MCP (getJiraIssue), and review.md compares the PR's scope against the ticket's acceptance criteria, raising any mismatch as an open question rather than as a severity-ranked finding"
       ]
     },
     {
@@ -84,7 +87,8 @@
         "review.md distinguishes what was verified in the working tree from what is inferred",
         "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
         "review.md answers the approve question directly with a verdict",
-        "the skill did not approve the PR itself; if approval is wanted it hands off to is:bitbucket explicitly"
+        "the skill did not approve the PR itself; if approval is wanted it hands off to is:bitbucket explicitly",
+        "the ticket key was extracted from the PR and read via the Jira MCP (getJiraIssue), and review.md compares the PR's scope against the ticket's acceptance criteria, raising any mismatch as an open question rather than as a severity-ranked finding"
       ]
     }
   ]

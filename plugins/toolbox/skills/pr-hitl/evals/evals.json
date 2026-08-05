@@ -20,7 +20,8 @@
         "actions.log records opening the worktree as a NEW IntelliJ project window (idea64 with the worktree path), not only individual files",
         "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
         "review.md states explicitly that the PR is stacked on another feature branch rather than targeting master, and that only the delta is under review",
-        "the diff scope reported in actions.log is the destination-based delta (10 files, +320/-21), not the master-based diff (11 files, +485/-47)"
+        "the diff scope reported in actions.log is the destination-based delta (10 files, +320/-21), not the master-based diff (11 files, +485/-47)",
+        "the ticket key was extracted from the PR and read via the Jira MCP (getJiraIssue), and review.md compares the PR's scope against the ticket's acceptance criteria, raising any mismatch as an open question rather than as a severity-ranked finding"
       ]
     },
     {
@@ -40,7 +41,8 @@
         "review.md ends by handing back to the human with a genuine question, and stops after the first theme instead of covering every theme in one message",
         "actions.log records opening the worktree as a NEW IntelliJ project window (idea64 with the worktree path), not only individual files",
         "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
-        "review.md does not wrongly claim the PR is stacked — #808 targets master"
+        "review.md does not wrongly claim the PR is stacked — #808 targets master",
+        "the ticket key was extracted from the PR and read via the Jira MCP (getJiraIssue), and review.md compares the PR's scope against the ticket's acceptance criteria, raising any mismatch as an open question rather than as a severity-ranked finding"
       ]
     },
     {
@@ -61,7 +63,8 @@
         "actions.log records opening the worktree as a NEW IntelliJ project window (idea64 with the worktree path), not only individual files",
         "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
         "review.md states explicitly that the PR is stacked on another feature branch rather than targeting master, and that only the delta is under review",
-        "review.md is written in French, matching the language the user used"
+        "review.md is written in French, matching the language the user used",
+        "the ticket key was extracted from the PR and read via the Jira MCP (getJiraIssue), and review.md compares the PR's scope against the ticket's acceptance criteria, raising any mismatch as an open question rather than as a severity-ranked finding"
       ]
     },
     {
@@ -81,7 +84,8 @@
         "review.md ends by handing back to the human with a genuine question, and stops after the first theme instead of covering every theme in one message",
         "actions.log records opening the worktree as a NEW IntelliJ project window (idea64 with the worktree path), not only individual files",
         "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
-        "review.md is written in French, matching the language the user used"
+        "review.md is written in French, matching the language the user used",
+        "the ticket key was extracted from the PR and read via the Jira MCP (getJiraIssue), and review.md compares the PR's scope against the ticket's acceptance criteria, raising any mismatch as an open question rather than as a severity-ranked finding"
       ]
     }
   ]
