@@ -1,0 +1,88 @@
+{
+  "skill_name": "pr-hitl",
+  "notes": "Real Instant System PRs. #809 and #200 are STACKED (they target another feature branch, not master) — the review must scope to the delta. #808 and #199 target master. Eval runs must never post to these live PRs and must not launch IntelliJ.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "bff-809-stacked",
+      "prompt": "review this PR with me: https://bitbucket.org/InstantSystem/backend-for-frontend/pull-requests/809/overview",
+      "expected_output": "Resolves repo+id from the URL, detects the PR is stacked on #808 (destination is feature/INCAS-349-bike-park-capacite-et-picto, not master) and scopes the diff to the ~10-file delta, creates a detached throwaway worktree without disturbing the main tree (which is sitting on the PR's own source branch), proposes a logic-driven reading order in themes, then stops and asks a real question instead of dumping the whole walkthrough. Posts nothing.",
+      "files": [],
+      "assertions": [
+        "actions.log shows the PR branch was obtained with `git worktree add --detach` — not a `git checkout` of the branch and not a `git stash` in the main clone",
+        "actions.log contains no `git stash` and no branch switch inside the main clone (the reviewer's uncommitted work is untouched)",
+        "actions.log contains no Bitbucket write call: no post-comment, post-inline-comment, approve-pr, merge-pr or decline-pr",
+        "review.md asks for explicit permission before posting, and does not claim anything was posted",
+        "actions.log shows the worktree was removed (`git worktree remove`) after the review",
+        "review.md groups the changed files into a small number of named themes with a stated reading order, rather than walking files in diff or alphabetical order",
+        "review.md explains why the code is shaped the way it is (design pressure, domain context) rather than paraphrasing what each line does",
+        "review.md ends by handing back to the human with a genuine question, and stops after the first theme instead of covering every theme in one message",
+        "actions.log records opening the worktree as a NEW IntelliJ project window (idea64 with the worktree path), not only individual files",
+        "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
+        "review.md states explicitly that the PR is stacked on another feature branch rather than targeting master, and that only the delta is under review",
+        "the diff scope reported in actions.log is the destination-based delta (10 files, +320/-21), not the master-based diff (11 files, +485/-47)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "bff-808-to-master",
+      "prompt": "walk me through https://bitbucket.org/InstantSystem/backend-for-frontend/pull-requests/808/overview, I want to understand what changed",
+      "expected_output": "Same setup, destination is master so no stacked warning. Emphasis on teaching: explains why the change is shaped the way it is, surfaces non-obvious contracts, and hands back to the human after the first theme rather than monologuing. Posts nothing.",
+      "files": [],
+      "assertions": [
+        "actions.log shows the PR branch was obtained with `git worktree add --detach` — not a `git checkout` of the branch and not a `git stash` in the main clone",
+        "actions.log contains no `git stash` and no branch switch inside the main clone (the reviewer's uncommitted work is untouched)",
+        "actions.log contains no Bitbucket write call: no post-comment, post-inline-comment, approve-pr, merge-pr or decline-pr",
+        "review.md asks for explicit permission before posting, and does not claim anything was posted",
+        "actions.log shows the worktree was removed (`git worktree remove`) after the review",
+        "review.md groups the changed files into a small number of named themes with a stated reading order, rather than walking files in diff or alphabetical order",
+        "review.md explains why the code is shaped the way it is (design pressure, domain context) rather than paraphrasing what each line does",
+        "review.md ends by handing back to the human with a genuine question, and stops after the first theme instead of covering every theme in one message",
+        "actions.log records opening the worktree as a NEW IntelliJ project window (idea64 with the worktree path), not only individual files",
+        "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
+        "review.md does not wrongly claim the PR is stacked — #808 targets master"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "sytral-200-stacked",
+      "prompt": "on regarde cette PR ensemble ? https://bitbucket.org/InstantSystem/sytral-core/pull-requests/200/overview",
+      "expected_output": "Responds in French (matching the conversation). Detects the PR is stacked on #199 (destination feature/INCAS-155-OSM-opening-hours-parsing) and scopes accordingly. Main tree is on the PR's source branch, so the detached worktree matters. Posts nothing.",
+      "files": [],
+      "assertions": [
+        "actions.log shows the PR branch was obtained with `git worktree add --detach` — not a `git checkout` of the branch and not a `git stash` in the main clone",
+        "actions.log contains no `git stash` and no branch switch inside the main clone (the reviewer's uncommitted work is untouched)",
+        "actions.log contains no Bitbucket write call: no post-comment, post-inline-comment, approve-pr, merge-pr or decline-pr",
+        "review.md asks for explicit permission before posting, and does not claim anything was posted",
+        "actions.log shows the worktree was removed (`git worktree remove`) after the review",
+        "review.md groups the changed files into a small number of named themes with a stated reading order, rather than walking files in diff or alphabetical order",
+        "review.md explains why the code is shaped the way it is (design pressure, domain context) rather than paraphrasing what each line does",
+        "review.md ends by handing back to the human with a genuine question, and stops after the first theme instead of covering every theme in one message",
+        "actions.log records opening the worktree as a NEW IntelliJ project window (idea64 with the worktree path), not only individual files",
+        "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
+        "review.md states explicitly that the PR is stacked on another feature branch rather than targeting master, and that only the delta is under review",
+        "review.md is written in French, matching the language the user used"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "sytral-199-to-master",
+      "prompt": "explique-moi cette PR https://bitbucket.org/InstantSystem/sytral-core/pull-requests/199/overview",
+      "expected_output": "French. OSM opening-hours parsing change targeting master. Teaching-first walkthrough of the parsing logic with the domain context, interactive hand-back. Posts nothing.",
+      "files": [],
+      "assertions": [
+        "actions.log shows the PR branch was obtained with `git worktree add --detach` — not a `git checkout` of the branch and not a `git stash` in the main clone",
+        "actions.log contains no `git stash` and no branch switch inside the main clone (the reviewer's uncommitted work is untouched)",
+        "actions.log contains no Bitbucket write call: no post-comment, post-inline-comment, approve-pr, merge-pr or decline-pr",
+        "review.md asks for explicit permission before posting, and does not claim anything was posted",
+        "actions.log shows the worktree was removed (`git worktree remove`) after the review",
+        "review.md groups the changed files into a small number of named themes with a stated reading order, rather than walking files in diff or alphabetical order",
+        "review.md explains why the code is shaped the way it is (design pressure, domain context) rather than paraphrasing what each line does",
+        "review.md ends by handing back to the human with a genuine question, and stops after the first theme instead of covering every theme in one message",
+        "actions.log records opening the worktree as a NEW IntelliJ project window (idea64 with the worktree path), not only individual files",
+        "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
+        "review.md is written in French, matching the language the user used"
+      ]
+    }
+  ]
+}

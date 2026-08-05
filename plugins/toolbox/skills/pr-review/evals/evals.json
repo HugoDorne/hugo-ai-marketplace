@@ -1,0 +1,91 @@
+{
+  "skill_name": "pr-review",
+  "notes": "Real Instant System PRs. #809 and #200 are STACKED (they target another feature branch, not master) — reviewing against master would comment on the parent PR's code. #808 and #199 target master. Eval #2 deliberately uses an http:// URL to test URL tolerance. Eval runs must never post to these live PRs.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "bff-809-stacked",
+      "prompt": "review this PR https://bitbucket.org/InstantSystem/backend-for-frontend/pull-requests/809/overview",
+      "expected_output": "Detects the stacked destination (feature/INCAS-349-…, not master) and diffs against it with three-dot merge-base semantics, giving the ~10-file / +320 delta rather than the 11-file / +485 master diff. Creates a detached worktree, reads beyond the diff for context, reports findings with blocker/issue/suggestion/nitpick severities anchored to file:line, spells out the exact comments it would post, then asks permission. Posts nothing. Removes the worktree.",
+      "files": [],
+      "assertions": [
+        "actions.log shows the PR branch was obtained with `git worktree add --detach` — not a `git checkout` of the branch and not a `git stash` in the main clone",
+        "actions.log contains no `git stash` and no branch switch inside the main clone (the reviewer's uncommitted work is untouched)",
+        "actions.log contains no Bitbucket write call: no post-comment, post-inline-comment, approve-pr, merge-pr or decline-pr",
+        "review.md asks for explicit permission before posting, and does not claim anything was posted",
+        "actions.log shows the worktree was removed (`git worktree remove`) after the review",
+        "every finding in review.md is anchored to a concrete `file:line`",
+        "findings in review.md carry a severity from the blocker / issue / suggestion / nitpick taxonomy",
+        "review.md spells out the exact text of each comment it proposes to post, before asking permission",
+        "review.md distinguishes what was verified in the working tree from what is inferred",
+        "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
+        "review.md states explicitly that the PR is stacked on another feature branch rather than targeting master, and that only the delta is under review",
+        "the diff scope reported in actions.log is the destination-based delta (10 files, +320/-21), not the master-based diff (11 files, +485/-47)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "bff-808-http-url",
+      "prompt": "des problèmes dans cette PR ? http://bitbucket.org/InstantSystem/backend-for-frontend/pull-requests/808/overview",
+      "expected_output": "Parses the http:// URL without complaint. Responds in French. Destination is master. Java/Spring findings with severities anchored to file:line, exact comment text shown, permission requested before posting. Posts nothing. Removes the worktree.",
+      "files": [],
+      "assertions": [
+        "actions.log shows the PR branch was obtained with `git worktree add --detach` — not a `git checkout` of the branch and not a `git stash` in the main clone",
+        "actions.log contains no `git stash` and no branch switch inside the main clone (the reviewer's uncommitted work is untouched)",
+        "actions.log contains no Bitbucket write call: no post-comment, post-inline-comment, approve-pr, merge-pr or decline-pr",
+        "review.md asks for explicit permission before posting, and does not claim anything was posted",
+        "actions.log shows the worktree was removed (`git worktree remove`) after the review",
+        "every finding in review.md is anchored to a concrete `file:line`",
+        "findings in review.md carry a severity from the blocker / issue / suggestion / nitpick taxonomy",
+        "review.md spells out the exact text of each comment it proposes to post, before asking permission",
+        "review.md distinguishes what was verified in the working tree from what is inferred",
+        "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
+        "review.md is written in French, matching the language the user used",
+        "the http:// (not https://) URL was parsed into repo slug + PR id without an error or a request for clarification"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "sytral-200-stacked",
+      "prompt": "review cette PR et propose des commentaires https://bitbucket.org/InstantSystem/sytral-core/pull-requests/200/overview",
+      "expected_output": "French. Detects the stack on #199 and scopes the diff to the delta. The explicit ask for comments must still not bypass the permission gate — it presents the comment text and waits. Posts nothing. Removes the worktree.",
+      "files": [],
+      "assertions": [
+        "actions.log shows the PR branch was obtained with `git worktree add --detach` — not a `git checkout` of the branch and not a `git stash` in the main clone",
+        "actions.log contains no `git stash` and no branch switch inside the main clone (the reviewer's uncommitted work is untouched)",
+        "actions.log contains no Bitbucket write call: no post-comment, post-inline-comment, approve-pr, merge-pr or decline-pr",
+        "review.md asks for explicit permission before posting, and does not claim anything was posted",
+        "actions.log shows the worktree was removed (`git worktree remove`) after the review",
+        "every finding in review.md is anchored to a concrete `file:line`",
+        "findings in review.md carry a severity from the blocker / issue / suggestion / nitpick taxonomy",
+        "review.md spells out the exact text of each comment it proposes to post, before asking permission",
+        "review.md distinguishes what was verified in the working tree from what is inferred",
+        "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
+        "review.md states explicitly that the PR is stacked on another feature branch rather than targeting master, and that only the delta is under review",
+        "review.md is written in French, matching the language the user used",
+        "the explicit request for comments did not bypass the permission gate — the comments are shown as proposals awaiting approval"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "sytral-199-approve-question",
+      "prompt": "can I approve this? https://bitbucket.org/InstantSystem/sytral-core/pull-requests/199/overview",
+      "expected_output": "Gives a clear verdict answering the actual question asked, with findings ranked by severity. Does NOT call approve-pr itself — hands off to is:bitbucket explicitly if the user wants to approve. Posts nothing. Removes the worktree.",
+      "files": [],
+      "assertions": [
+        "actions.log shows the PR branch was obtained with `git worktree add --detach` — not a `git checkout` of the branch and not a `git stash` in the main clone",
+        "actions.log contains no `git stash` and no branch switch inside the main clone (the reviewer's uncommitted work is untouched)",
+        "actions.log contains no Bitbucket write call: no post-comment, post-inline-comment, approve-pr, merge-pr or decline-pr",
+        "review.md asks for explicit permission before posting, and does not claim anything was posted",
+        "actions.log shows the worktree was removed (`git worktree remove`) after the review",
+        "every finding in review.md is anchored to a concrete `file:line`",
+        "findings in review.md carry a severity from the blocker / issue / suggestion / nitpick taxonomy",
+        "review.md spells out the exact text of each comment it proposes to post, before asking permission",
+        "review.md distinguishes what was verified in the working tree from what is inferred",
+        "actions.log shows the diff was taken against the API-reported destination branch using three-dot merge-base syntax (`origin/<dest>...HEAD`), not against master and not with two dots",
+        "review.md answers the approve question directly with a verdict",
+        "the skill did not approve the PR itself; if approval is wanted it hands off to is:bitbucket explicitly"
+      ]
+    }
+  ]
+}
