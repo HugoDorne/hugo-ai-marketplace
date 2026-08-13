@@ -28,6 +28,10 @@ order that follows the logic rather than the alphabet, and **dialogue instead of
 
 > **Windows skill.** Commands use PowerShell. `git` invocations are shell-agnostic.
 
+Talk to the reviewer in the language the request was made in — French or English, matching the
+user's message, from the very first reply. If the invocation was just a bare PR URL with no other
+words, default to French.
+
 ## Why a worktree
 
 The reviewer is mid-feature on their own branch and must keep working. A `git worktree` gives a
@@ -210,8 +214,6 @@ Follow where the reviewer takes it. If they ask "why not just do X?", that tange
 chase it, and use the IDE to show the answer (the caller that would break, the test that pins the
 behaviour). If they say "yeah, next", move on without ceremony. For a deeper single-file
 explanation, the `explain` skill is the right tool to reach for.
-
-Match the conversation's language — French question, French answer.
 
 ### 8b. Draw a diagram when the shape is the hard part
 

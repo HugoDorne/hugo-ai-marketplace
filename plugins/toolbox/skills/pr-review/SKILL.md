@@ -25,6 +25,9 @@ work. If the user wants to learn the code rather than get a verdict, `pr-hitl` i
 
 > **Windows skill.** Commands use PowerShell. `git` invocations are shell-agnostic.
 
+Answer in the language the request was made in — French or English, matching the user's message. If
+the invocation was just a bare PR URL with no other words, default to French.
+
 ## Why a worktree rather than the API diff
 
 Bitbucket's diff endpoint returns hunks with about three lines of context, which is enough to spot
@@ -187,7 +190,7 @@ that says so.
 
 ### 7. Report, with the comments spelled out
 
-Write the report in the conversation, in the language the user is speaking. Anchor every finding to
+Write the report in the conversation, in the language established above. Anchor every finding to
 `file:line` — a finding nobody can locate isn't actionable, and inline comments need the position.
 
 ```
